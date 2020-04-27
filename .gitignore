@@ -127,8 +127,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# Custom
-data.zip
-OpenAccess-master/**
-**.ndjson

@@ -1,0 +1,5 @@
+# Data file names used
+# Don't commit these; they're way too big
+data.zip
+OpenAccess-master/**
+**.ndjson
