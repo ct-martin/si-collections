@@ -129,7 +129,6 @@ dmypy.json
 .pyre/
 
 # Custom
-# - MetObjects should be downloaded
-# - stats.json should be moved to docs/
-MetObjects.csv
-stats.json
+data.zip
+OpenAccess-master/**
+**.ndjson
