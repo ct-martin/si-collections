@@ -57,9 +57,11 @@ function leave(d, i, nodes) {
 }
 
 function stats() {
-  d3.select('#stat--total').text(`${new Intl.NumberFormat('en-US', {notation: 'compact', compactDisplay: 'short'}).format(data.total)}`)
-  d3.select('#stat--countries').text(`${Object.keys(data.country).length}`)
-  const oldest = d3.min(data.age.map(i => +i.name))
+  dataset = (filter ? data.depts.filter(i => i.name === filter)[0] : data)
+
+  d3.select('#stat--total').text(`${new Intl.NumberFormat('en-US', {notation: 'compact', compactDisplay: 'short'}).format(dataset.total || dataset.count)}`)
+  d3.select('#stat--countries').text(`${Object.keys(dataset.country).length}`)
+  const oldest = d3.min(Array.isArray(dataset.age) ? dataset.age.map(i => +i.name) : Object.keys(dataset.age).map(i => +i))
   d3.select('#stat--oldest').text(`${Math.abs(oldest)}s${ oldest <= 0 ? ' BCE' : ''}`)
 }
 
