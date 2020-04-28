@@ -62,6 +62,7 @@ The story that's getting told through these visualizations is a high-level view 
 
 Some todo items for the experience:
 * Look at better contrast in the map (while maintaining the '0' value of a country as distinct from the ocean)
+* Figure out filters for the age chart so it stops throwing errors (skipping, removing, or replacing values somehow; I'm not fully sure how `d3.stack()` likes being messed with)
 * Optimize the hover code to be faster
   * I need to figure out how this works with d3 since I'm not changing the dataset and I wasn't able to get `merge` working quickly
   * This also leads to some duplicate items, like `<title>`s getting added every update to the pie chart
