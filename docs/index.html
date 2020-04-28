@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Smithsonian Collections</title>
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.4/dist/semantic.min.css">
+
+  <style type="text/css">
+  body{padding-top:2em;}
+  svg{height:300px;width:100%}
+  </style>
+
+  <script src="https://d3js.org/d3.v5.min.js"></script><script src="https://d3js.org/d3-array.v2.min.js"></script>
+  <script src="https://d3js.org/d3-color.v1.min.js"></script>
+  <script src="https://d3js.org/d3-format.v1.min.js"></script>
+  <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+  <script src="https://d3js.org/d3-time.v1.min.js"></script>
+  <script src="https://d3js.org/d3-time-format.v2.min.js"></script>
+  <script src="https://d3js.org/d3-scale.v3.min.js"></script>
+  <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+  <script src="https://unpkg.com/topojson-client@3"></script>
+  <script src="https://d3js.org/d3-geo.v1.min.js"></script>
+  <!--<script src="https://unpkg.com/d3-array@1"></script>
+  <script src="https://unpkg.com/d3-collection@1"></script>
+  <script src="https://unpkg.com/d3-path@1"></script>
+  <script src="https://unpkg.com/d3-shape@1"></script>
+  <script src="https://unpkg.com/d3-sankey@0"></script>-->
+</head>
+<body>
+  <header class="ui container">
+    <h1 class="ui header">
+      <div class="content">
+        Smithsonian Collections
+        <p class="sub header">About the Project; Last Updated 27 Apr, 2020</p>
+      </div>
+    </h1>
+  </header>
+  <div class="ui hidden divider"></div>
+  <div class="ui three statistics">
+    <div class="statistic">
+      <div class="value" id="stat--total"></div>
+      <div class="label">Items</div>
+    </div>
+    <div class="statistic">
+      <div class="value" id="stat--countries"></div>
+      <div class="label">Countries</div>
+    </div>
+    <div class="statistic">
+      <div class="value" id="stat--oldest"></div>
+      <div class="label">Oldest Item</div>
+    </div>
+  </div>
+  <div class="ui hidden divider"></div>
+  <main class="ui container grid">
+    <div class="four wide tablet column">
+      <b class="header">Legend</b>
+      <div class="ui list" id="legend"></div>
+    </div>
+    <div class="twelve wide tablet column">
+      <div class="row">
+        <div class="column">
+          <b class="header">Composition by Unit</b>
+          <svg id="units"></svg>
+        </div>
+        <!--<div class="column">
+          <svg id="onexhibit"></svg>
+        </div>-->
+      </div>
+      <div class="row">
+        <b class="header">Age of Items from Last 200 Years</b>
+        <svg id="ages"></svg>
+      </div>
+      <div class="row">
+        <b class="header">Country of Origin</b>
+        <svg id="map"></svg>
+      </div>
+    </div>
+  </main>
+  <script src="main.js"></script>
+</body>
+</html>
