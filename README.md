@@ -47,7 +47,7 @@ I have a list of other things I'd like to look at in the future, such as medium,
 I used the CSS part of [Fomantic UI](https://fomantic-ui.com/) (a fork of Semantic UI) for the UI components and colors.
 Since there are so many units, I had to repeat colors, but I tried to maintain the same (alpha) order of units where possible.
 In the age chart, they're in the same order as the legend, but from the bottom up.
-This is also why I added the hover filtering (available via `#hover` in the URL) - so you can quickly _see_ where things come from.
+This is also why I added filtering - so you can quickly _see_ where things come from.
 The map uses a grayscale because it's not tied to a unit but rather the sum of all units.
 
 I limited ages to the last 200 years because if you start going back further you get small numbers of items and the intervals start spreading out too.
