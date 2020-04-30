@@ -305,7 +305,6 @@ function makePie(_data, selector) {
 function updateUnits() {
   const units = Object.keys(data.depts)
     .map(i => ({ name: data.depts[i].name, value: data.depts[i].count }))
-    .sort((a, b) => a.value - b.value)
 
   makePie(units, '#units')
 }
