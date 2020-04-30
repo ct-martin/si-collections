@@ -193,6 +193,8 @@ function initAge() {
     data.depts.forEach(j => {
       if(Object.keys(j.age).includes(`${i.name}`)) {
         depts[j.name] = j.age[`${i.name}`]
+      } else {
+        depts[j.name] = 0
       }
     })
 
