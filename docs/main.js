@@ -47,10 +47,10 @@ function cleanData() {
 }
 
 function hover(d, i, nodes) {
-  if(window.location.hash.includes('hover')) {
+  //if(window.location.hash.includes('hover')) {
     filter = d.key || d.data?.name || d.name
     update()
-  }
+  //}
 }
 
 function leave(d, i, nodes) {
