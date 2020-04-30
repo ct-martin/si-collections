@@ -23,6 +23,7 @@ let age, ages, series
 let world, countries, path
 
 let filter = undefined
+let filterPersist = false
 
 // Convert from generation-oriented format to iteration-oriented format
 function cleanData() {
@@ -46,15 +47,32 @@ function cleanData() {
     .map(i => ({ name: +i, value: +data.age[i] }))
 }
 
-function hover(d, i, nodes) {
-  //if(window.location.hash.includes('hover')) {
+function hover(d) {
+  if(!filterPersist) {
     filter = d.key || d.data?.name || d.name
     update()
-  //}
+  }
 }
 
-function leave(d, i, nodes) {
-  filter = undefined
+function leave() {
+  if(!filterPersist) {
+    filter = undefined
+    update()
+  }
+}
+
+function click(d) {
+  const newFilter = d.key || d.data?.name || d.name
+
+  // if click on same as currently filtering, turn off
+  if(filterPersist && filter === newFilter) {
+    filter = undefined
+    filterPersist = false
+  } else {
+    filter = newFilter
+    filterPersist = true
+  }
+
   update()
 }
 
@@ -74,10 +92,10 @@ function legend() {
     .selectAll('div')
     .data(data.depts, d => d.unit_code)
     .join('div')
-      .append('div')
       .attr('class', 'item')
       .html(d => `<span class="ui ${!filter || filter == d.name ? deptColors[d.name].name : 'grey'} empty circular horizontal label"></span> ${d.name}`)
       .on('mouseover', hover)
+      .on('click', click)
       .on('mouseout', leave)
 }
 
@@ -261,6 +279,7 @@ function updateAge() {
       .attr('height', d => y(d[0]) - y(d[1]))
       .attr('width', x.bandwidth())
       .on('mouseover', hover)
+      .on('click', click)
       .on('mouseout', leave)
       .append('title')
         .text(d => `${d.data.name}
@@ -308,6 +327,7 @@ function makePie(_data, selector) {
         .attr('fill', d => `${!filter || filter === d.data.name ? deptColors[d.data.name].hex : '#ccc'}`)
         .attr('d', arc)
         .on('mouseover', hover)
+        .on('click', click)
         .on('mouseout', leave)
         .append('title')
           .text(d => `${d.data.name}
