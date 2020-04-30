@@ -88,7 +88,7 @@ function stats() {
 function legend() {
   let div = d3.select('#legend')
 
-  const items = div
+  div
     .selectAll('div')
     .data(data.depts, d => d.unit_code)
     .join('div')
@@ -134,7 +134,6 @@ function initMap() {
       .attr("xlink:href", new URL("#outline", location))
 
   const g = svg.append("g")
-    .attr('id', 'map-paths')
     .attr("clip-path", `url(${new URL("#clip", location)})`)
 
   g.append("use")
@@ -168,7 +167,6 @@ ${Object.keys(data.country).includes(d.properties.name) ? data.country[d.propert
 
 function updateMap() {
   dataset = (filter ? data.depts.filter(i => i.name === filter)[0] : data)
-  const g = d3.select('#map-paths')
 
   color = d3.scaleSequentialLog()
     .domain(d3.extent(Object.values(dataset.country)))
