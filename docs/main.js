@@ -160,12 +160,19 @@ function updateMap() {
   d3.select('#mappaths')
     .selectAll("path")
     .data(countries.features)
-    .join("path")
-      .attr("fill", d => color(dataset.country[d.properties.name]))
-      .attr("d", path)
-    .append("title")
-      .text(d => `${d.properties.name}
+    .join(
+      enter => enter.append('path')
+        .attr("d", path)
+        .attr("fill", d => color(dataset.country[d.properties.name]))
+        .append("title")
+          .text(d => `${d.properties.name}
+${Object.keys(dataset.country).includes(d.properties.name) ? dataset.country[d.properties.name] : "N/A"}`),
+      update => update
+        .attr("fill", d => color(dataset.country[d.properties.name]))
+        .select("title")
+          .text(d => `${d.properties.name}
 ${Object.keys(dataset.country).includes(d.properties.name) ? dataset.country[d.properties.name] : "N/A"}`)
+    )
 }
 
 function initAge() {
@@ -247,15 +254,16 @@ function updateAge() {
       .attr('fill', d => (!filter || filter === d.key ? deptColors[d.key].hex : '#ccc'))
     .selectAll('rect')
     .data(d => d)
-    .join('rect')
+    .enter()
+      .append('rect')
       .attr('x', (d, i) => x(d.data.name))
       .attr('y', d => y(d[1]))
       .attr('height', d => y(d[0]) - y(d[1]))
       .attr('width', x.bandwidth())
       .on('mouseover', hover)
       .on('mouseout', leave)
-    .append('title')
-      .text(d => `${d.data.name}
+      .append('title')
+        .text(d => `${d.data.name}
 ${d.key}
 ${d.data[d.key]}`)
 
@@ -294,14 +302,18 @@ function makePie(_data, selector) {
 
   svg.selectAll('path')
     .data(arcs)
-    .join('path')
-      .attr('fill', d => `${!filter || filter === d.data.name ? deptColors[d.data.name].hex : '#ccc'}`)
-      .attr('d', arc)
-      .on('mouseover', hover)
-      .on('mouseout', leave)
-    .append('title')
-      .text(d => `${d.data.name}
-  ${d.value}`)
+    .join(
+      enter => enter
+        .append('path')
+        .attr('fill', d => `${!filter || filter === d.data.name ? deptColors[d.data.name].hex : '#ccc'}`)
+        .attr('d', arc)
+        .on('mouseover', hover)
+        .on('mouseout', leave)
+        .append('title')
+          .text(d => `${d.data.name}
+${d.value}`),
+      update => update.attr('fill', d => `${!filter || filter === d.data.name ? deptColors[d.data.name].hex : '#ccc'}`)
+    )
 }
 
 function updateUnits() {
