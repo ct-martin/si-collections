@@ -202,7 +202,7 @@ function initAge() {
   
   xAxisGroup = svg.append('g')
     .attr('class', 'xaxisg')
-    .attr('transform', `translate(0, ${h - 20})`)
+    .attr('transform', `translate(0, ${h - 25})`)
     
   yAxisGroup = svg.append('g')
     .attr('class', 'yaxisg')
@@ -253,7 +253,7 @@ function updateAge() {
 
   yScale = d3.scaleLog()
       .domain([1, d3.max(age.map(d => +d.value))])
-      .rangeRound([h - 20, 20])
+      .rangeRound([h - 25, 15])
 
   x = d3.scaleBand()
     .domain(ages.map(d => d.name))
@@ -261,7 +261,7 @@ function updateAge() {
     .padding(0.1)
   y = d3.scaleLinear()
     .domain([0, d3.max(series, d => d3.max(d, d => d[1]))])
-    .rangeRound([h - 20, 0])
+    .rangeRound([h - 25, 15])
   
   svg.select('.bars')
     .selectAll('g')
