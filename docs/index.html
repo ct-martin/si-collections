@@ -49,6 +49,34 @@
   <div class="ui hidden divider"></div>
   <main class="ui container grid">
     <div class="four wide tablet column">
+      <details>
+        <summary><b class="header">Filter</b></summary>
+        <p>Hover or click on units to highlight them</p>
+        <form id="NMNHFilter" class="ui form">
+          <div class="grouped fields">
+            <label>NMNH Filter (does not affect stats or map)</label>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="NMNHFilter" id="NMNHFilterInclude" value="include" checked>
+                <label for="NMNHFilterInclude">Include NMNH</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="NMNHFilter" id="NMNHFilterExclude" value="exclude">
+                <label for="NMNHFilterExclude">Exclude NMNH</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="NMNHFilter" id="NMNHFilterOnly" value="only">
+                <label for="NMNHFilterOnly">Only NMNH</label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </details>
+      <div class="ui divider"></div>
       <b class="header">Legend</b>
       <div class="ui list" id="legend"></div>
     </div>

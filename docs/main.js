@@ -24,6 +24,7 @@ let world, countries, path
 
 let filter = undefined
 let filterPersist = false
+let filterNMNH = 'include'
 
 // Convert from generation-oriented format to iteration-oriented format
 function cleanData() {
@@ -47,9 +48,48 @@ function cleanData() {
     .map(i => ({ name: +i, value: +data.age[i] }))
 }
 
+/**
+ * Checks if unit passes both filters
+ * 
+ * Filters:
+ * * NMNH (Include (Both), Exclude, Only)
+ * * Unit name filter (on hover/click)
+ * 
+ * @param name Unit to check
+ * @param yes Return if passes
+ * @param no Return if does not pass
+ */
+function filterCheck(name, yes, no) {
+  // Fail if NMNH only and not NMNH
+  if(filterNMNH === 'only' && !name.startsWith('NMNH')) return no
+
+  // Fail if NMNH excluded and NMNH
+  if(filterNMNH === 'exclude' && name.startsWith('NMNH')) return no
+
+  // Fail if unit filter is active and is not this unit
+  if(filter !== undefined && filter !== name) return no
+
+  // Otherwise, no filter set or is filtering to this unit
+  return yes
+}
+
+function updateNMNHFilter() {
+  filterNMNH = document.querySelector('input[name=NMNHFilter]:checked').value
+
+  if(filterNMNH === 'only' && filter && !filter.startsWith('NMNH')) filter = undefined
+  if(filterNMNH === 'exclude' && filter && filter.startsWith('NMNH')) filter = undefined
+
+  update()
+}
+
 function hover(d) {
   if(!filterPersist) {
-    filter = d.key || d.data?.name || d.name
+    const name = d.key || d.data?.name || d.name
+
+    if(filterNMNH === 'only' && !name.startsWith('NMNH')) return
+    if(filterNMNH === 'exclude' && name.startsWith('NMNH')) return
+  
+    filter = name
     update()
   }
 }
@@ -63,6 +103,9 @@ function leave() {
 
 function click(d) {
   const newFilter = d.key || d.data?.name || d.name
+
+  if(filterNMNH === 'only' && !newFilter.startsWith('NMNH')) return
+  if(filterNMNH === 'exclude' && newFilter.startsWith('NMNH')) return
 
   // if click on same as currently filtering, turn off
   if(filterPersist && filter === newFilter) {
@@ -93,7 +136,7 @@ function legend() {
     .data(data.depts, d => d.unit_code)
     .join('div')
       .attr('class', 'item')
-      .html(d => `<span class="ui ${!filter || filter == d.name ? deptColors[d.name].name : 'grey'} empty circular horizontal label"></span> ${d.name}`)
+      .html(d => `<span class="ui ${filterCheck(d.name, deptColors[d.name].name, 'grey')} empty circular horizontal label"></span> ${d.name}`)
       .on('mouseover', hover)
       .on('click', click)
       .on('mouseout', leave)
@@ -267,7 +310,7 @@ function updateAge() {
     .selectAll('g')
     .data(series)
     .join('g')
-      .attr('fill', d => (!filter || filter === d.key ? deptColors[d.key].hex : '#ccc'))
+      .attr('fill', d => (`${filterCheck(d.key, deptColors[d.key].hex, '#ccc')}`))
     .selectAll('rect')
     .data(d => d)
     .enter()
@@ -322,7 +365,7 @@ function makePie(_data, selector) {
     .join(
       enter => enter
         .append('path')
-        .attr('fill', d => `${!filter || filter === d.data.name ? deptColors[d.data.name].hex : '#ccc'}`)
+        .attr('fill', d => `${filterCheck(d.data.name, deptColors[d.data.name].hex, '#ccc')}`)
         .attr('d', arc)
         .on('mouseover', hover)
         .on('click', click)
@@ -330,7 +373,7 @@ function makePie(_data, selector) {
         .append('title')
           .text(d => `${d.data.name}
 ${d.value}`),
-      update => update.attr('fill', d => `${!filter || filter === d.data.name ? deptColors[d.data.name].hex : '#ccc'}`)
+      update => update.attr('fill', d => `${filterCheck(d.data.name, deptColors[d.data.name].hex, '#ccc')}`)
     )
 }
 
@@ -353,6 +396,10 @@ function updateOnExhibit() {
 function init() {
   initAge()
   initMap()
+
+  document.querySelectorAll('input[name=NMNHFilter]').forEach(el => {
+    el.addEventListener('change', updateNMNHFilter)
+  })
 }
 
 function update() {
