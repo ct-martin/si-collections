@@ -3,7 +3,7 @@
 Visualizations of the [Smithsonian Institution](https://www.si.edu/)'s collections.
 All data is from [Smithsonian Open Access](https://www.si.edu/openaccess).
 
-[![pipeline status](https://gitlab.com/ctmartin/si-collections/badges/master/pipeline.svg)](https://gitlab.com/ctmartin/si-collections/-/commits/master)
+![Deploy](https://github.com/ct-martin/si-collections/workflows/Deploy/badge.svg?branch=main)
 
 [View Here](https://si.ctmartin.dev/)
 
