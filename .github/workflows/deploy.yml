@@ -1,0 +1,42 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/deploy.yml'
+      - 'docs/**'
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@v2
+      with:
+        submodules: true
+    - name: Install rsync
+      run: |-
+        sudo apt install -y rsync
+    - name: Set up SSH Key for deploy
+      run: |-
+        mkdir ~/.ssh
+        chmod 700 ~/.ssh
+        echo "$SSH_KEY" > ~/.ssh/id
+        chmod 600 ~/.ssh/id
+      env:
+        SSH_KEY: ${{ secrets.GIT_SSH_KEY }}
+    - name: Deploy
+      run: |-
+        rsync -avz --delete --progress -e "ssh -i ~/.ssh/id -o IdentitiesOnly=yes -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" docs/ ci@$SERVER:~/www/si.ctmartin.dev
+      env:
+        SERVER: ${{ secrets.RSYNC_REMOTE_HOST }}
+        SECRET_REMOTE_IP: ${{ secrets.REMOTE_IP }}
+    - name: Purge Cache
+      run: |-
+        curl -X POST "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE/purge_cache" -H "Authorization: Bearer $CLOUDFLARE_API_KEY" -H "Content-Type: application/json" --data '{"purge_everything":true}'
+      env:
+        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_KEY }}
+        CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
