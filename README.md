@@ -4,6 +4,7 @@ Visualizations of the [Smithsonian Institution](https://www.si.edu/)'s collectio
 All data is from [Smithsonian Open Access](https://www.si.edu/openaccess).
 
 ![Deploy](https://github.com/ct-martin/si-collections/workflows/Deploy/badge.svg?branch=main)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ct-martin/si-collections/main?urlpath=lab%2Ftree%2Fmultipart.ipynb)
 
 [View Here](https://si.ctmartin.dev/)
 
