@@ -394,7 +394,7 @@ function updateOnExhibit() {
 }
 
 function init() {
-  document.querySelector('#last-updated').textContent = `; Last Updated ${new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(data.date))}`
+  document.querySelector('#last-updated').textContent = `; Last Updated ${new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(Math.floor(data.date * 1000)))}`
 
   initAge()
   initMap()
