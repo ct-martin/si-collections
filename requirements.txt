@@ -4,4 +4,5 @@
 #
 #    pip-compile --output-file=requirements.txt requirements.in
 #
-ujson==4.0.1              # via -r requirements.in
+ujson==5.4.0
+    # via -r requirements.in
